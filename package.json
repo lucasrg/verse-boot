@@ -1,0 +1,32 @@
+{
+  "name": "verse-boot",
+  "version": "0.0.1",
+  "description": "Verse boilerplate project",
+  "scripts": {
+    "start": "bin/dev.sh"
+  },
+  "main": "server/server.js",
+  "author": "Lucas Goraieb (https://github.com/lucasrg)",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "compression": "^1.6.1",
+    "cookie-parser": "^1.4.1",
+    "express": "^4.13.3",
+    "http-proxy": "^1.12.0",
+    "js-cookie": "^2.1.0",
+    "locale": "^0.1.0",
+    "superagent": "^2.1.0-beta.1",
+    "verse": "git://github.com/lucasrg/verse.git"
+  },
+  "devDependencies": {
+    "clean-css": "^3.4.9",
+    "instant": "^1.10.1",
+    "less": "^2.5.3",
+    "less-loader": "^2.2.2",
+    "webpack": "^1.12.9",
+    "webpack-dev-middleware": "^1.4.0",
+    "webpack-dev-server": "^1.14.0",
+    "webpack-hot-middleware": "^2.6.0",
+    "writefile": "^0.2.8"
+  }
+}

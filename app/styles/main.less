@@ -1,0 +1,684 @@
+@import "normalize.less";
+@import "palette.less";
+@import "responsive.less";
+@import "typography.less";
+@import "icons.less";
+@import "mixins.less";
+@import "components.less";
+@import "components/spinner.less";
+@import "components/image.less";
+@import "components/image-uploader.less";
+@import "components/cookbook.less";
+@import "components/recipe-list-item.less";
+@import "components/chat-list-item.less";
+@import "components/discussion-list-item.less";
+@import "components/activity-list.less";
+@import "components/feed-list-item.less";
+@import "components/chat-bar.less";
+@import "components/chat.less";
+@import "components/recipe-view.less";
+@import "components/compose-box.less";
+@import "components/drawer.less";
+@import "components/contacts.less";
+@import "components/publish-dialog.less";
+@import "components/send-recipe-dialog.less";
+@import "components/tabs.less";
+@import "components/bottom-bar.less";
+@import "components/feed.less";
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,700,400italic);
+
+@button-size: 40px;
+@button-size-half: @button-size / 2;
+@button-size-large: @button-size * 1.5;
+@checkbox-size: 20px;
+@icon-size:22px;
+
+@spacing-border: 4px;
+@spacing: 10px;
+@spacing-half: @spacing / 2;
+@spacing-double: @spacing * 2;
+@header-size: @button-size + @spacing-double;
+@footer-spacing: 80px;
+
+.container {
+  max-width: @max-app-width;
+  margin: auto;
+  position: relative;
+}
+
+.container.full-height {
+  height: 100%;
+}
+
+.scrollable {
+  overflow: auto;
+  height: 100%;
+  padding-bottom: @footer-spacing;
+}
+
+.scrollable.with-header {
+  padding-top: 60px;
+}
+
+.scrollable.home {
+  background-color: @white;
+}
+
+.footer {
+	text-align:center;
+	img {
+		display:block;
+		margin:@spacing-double*2 auto @spacing auto;
+	}
+	span {
+		display:block;
+		margin-bottom:@spacing-half;
+	}
+	.foot-description {
+		color: @header-grey;
+		font-size:@font-size-tiny;
+	}
+	.foot-focus {
+		color:@publish-green;
+	}
+}
+.invitation-box {
+	background-color:#fff;
+	padding:@spacing-double * 2;
+	.shadow-default;
+  text-align: center;
+	.activity-list {
+		margin:0;
+		border:0px;
+	}
+	p {
+		font-size: @font-size-head !important;
+		font-weight:bold;
+		color:@active-grey;
+	}
+	h2 {
+		font-size: @font-size-head !important;
+	}
+}
+
+.page {
+  header {
+    border-spacing: @spacing;
+    h1 {
+      margin: 0;
+			font-size: @font-size-head;
+			text-transform:capitalize;
+      color: @body-type;
+      font-weight: normal;
+    }
+  }
+
+}
+
+.invite-header {
+	margin:0px;
+	height:auto;
+	.invite-title {
+		width:auto;
+		display:inline;
+	}
+	.recipe-view {
+		display:inline-block;
+		width:auto;
+		background-color: inherit;
+		margin: 0 0 @spacing @spacing;
+		padding:0;
+		.with {
+			.span:first-child {
+				color:@inactive-grey !important;
+			}
+		}
+		.author {
+			padding:0px @spacing;
+		}
+		.h1 {
+			margin:0px;
+			line-height:0;
+		}
+		.members {
+			padding:0px;
+			margin:0px;
+		}
+	}
+	.branding {
+		cursor: pointer;
+		padding:@spacing-half 0 0 @spacing-double;
+		display:inline-block;
+    box-sizing: content-box;
+	}
+	.invite-stamp {
+		z-index:5;
+		position:absolute;
+		top:@spacing;
+		right:@spacing;
+	}
+}
+
+.thread-box {
+  field {
+    margin-bottom: @spacing-double;
+  }
+}
+
+.message-box {
+		width: 100%;
+		border: 0px;
+		border-bottom: 1px solid @grey-lines;
+		background-color:@white;
+		outline: 0;
+		height: 40px;
+		resize: none;
+		padding-top: 8px;
+		font-family: Roboto, Helvetica, sans-serif;
+}
+.placeholder {
+	text-align:center;
+	margin-top:@spacing-double*2;
+	h1 {
+		font-weight:bold;
+		font-size: @font-size-head;
+		color:@active-grey;
+		margin:0px;
+		line-height:0px;
+	}
+	p {
+		color:@header-grey;
+		width:280px;
+		margin:@spacing-double auto;
+	}
+	img {
+		margin-bottom:@spacing;
+		width:130px;
+	}
+}
+
+.validation-error {
+	color: @notification-red;
+}
+
+.notification-alert {
+	position: absolute;
+	bottom: 0;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: @black;
+	font-weight:700;
+	font-size:@font-size-small;
+	padding:@spacing @spacing-double;
+	width:100%;
+	text-align:center;
+	color:@white;
+	cursor: pointer;
+	.shadow-foot;
+	i {
+		margin:@spacing-half+2px @spacing @spacing @spacing;
+	}
+}
+
+header {
+  position: absolute;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background-color: @white;
+  z-index: 5;
+  border-spacing: @spacing;
+  height: 60px;
+  .shadow-default;
+	.table;
+  .transition(all 0.2s ease);
+
+  .button-inbox {
+    font-size: @font-size-big;
+    color: @header-grey;
+  }
+}
+
+header.hidden {
+  opacity: 0;
+  top: -60;
+}
+
+.form-icon {
+  width: 40px;
+  line-height: @button-size;
+  color: @active-grey;
+	font-size: @icon-size;
+}
+
+.form-icon.error {
+	color: @notification-red;
+}
+
+.members-box {
+  >span {
+    /* float: left; not sure why this threw off the padding */
+  }
+  input:not([type]), input[type="text"] {
+    border: none;
+    padding-left: @spacing-half;
+    // width: 85%;
+  }
+}
+
+.search-box {
+  display: inline-block;
+  position: relative;
+  background-color: @white;
+  padding-left: @spacing-half;
+  border: none;
+  .border-radius(3px);
+  .input-shadow;
+  i {
+    color: @inactive-grey;
+    position: absolute;
+    left: @spacing;
+    line-height: @button-size;
+		font-size: @font-size-body;
+  }
+  input {
+    padding-left: @spacing-double+13px;
+    margin-right: -(@spacing-double+13px);
+    border: none;
+    font-weight: lighter;
+    font-size: @font-size-body;
+    background: none;
+    height: @button-size;
+		&:focus {
+			outline:none;
+		}
+  }
+}
+
+.search-box.search-screen {
+  i { display: none; }
+  input {
+    margin-left: 0;
+  }
+}
+
+.avatar {
+  background-color: @coral;
+  color: @white;
+  border-radius: 100%;
+  display: inline-block;
+  white-space: nowrap;
+  width: @button-size;
+  height: @button-size;
+  line-height: @button-size;
+  text-align: center;
+  font-size: @font-size-body;
+  position: relative;
+  img {
+    display: none;
+    border-radius: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+.avatar-with-name {
+  display: inline-table;
+  border-spacing: 0;
+  >* {
+    display: table-cell;
+    vertical-align: middle;
+  }
+}
+
+.avatar-name {
+  font-style: normal;
+  font-size: @font-size-tiny;
+  padding-left: @spacing-half;
+}
+
+.avatar.square {
+  .border-radius(2px);
+}
+
+.avatar.small {
+  width: @button-size-half;
+  height: @button-size-half;
+  line-height: @button-size-half;
+  font-size: @font-size-tiny;
+}
+
+.avatar.medium {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  font-size: @font-size-tiny;
+}
+
+.avatar.large {
+  width: @button-size * 1.25;
+  height: @button-size * 1.25;
+  line-height: @button-size * 1.25;
+  font-size: @font-size-body;
+}
+
+.avatar-icons-1 {
+  img {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.avatar-icons-2 {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  display: inline-block;;
+  img {
+    position: absolute;
+    width: @button-size-half;
+    height: @button-size-half;
+  }
+  img:nth-child(2) {
+    right: 0;
+    bottom: 0;
+  }
+}
+
+.avatar-icons-3 {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  display: inline-block;;
+  img {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+  }
+  img:nth-child(1) {
+    left: 7px;
+  }
+  img:nth-child(2) {
+    right: 0;
+    bottom: 0;
+  }
+  img:nth-child(3) {
+    bottom: 0;
+  }
+}
+
+.avatar-icons-4 {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  display: inline-block;;
+  img {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+  }
+  img:nth-child(2) {
+    right: 0;
+  }
+  img:nth-child(3) {
+    bottom: 0;
+  }
+  img:nth-child(4) {
+    right: 0;
+    bottom: 0;
+  }
+}
+
+
+.contact-list {
+	border-radius: 5px;
+	border: 1px solid @inactive-grey;
+  .contact-shadow;
+  form {
+    padding: @spacing-double;
+  }
+  .footer {
+    border-spacing: @spacing-double;
+    >* {
+      width: 50%;
+    }
+  }
+  ul {
+    margin: 0;
+    padding: @spacing-double;
+    overflow-y: auto;
+    >* {
+      display: block;
+      margin-bottom: @spacing;
+    }
+  }
+}
+
+.popup {
+	min-height:400px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+	bottom: 0;
+  /* background-color: rgba(0,0,0,0.8); */
+  z-index: 10;
+  >div {
+    max-width: @max-app-width;
+    width: 90%;
+    height: 85%;
+    margin-top: @spacing-double*2;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.popup {
+  .contact-list {
+    position: relative;
+    ul {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 180px;
+      bottom: 0px;
+    }
+    .footer {
+      position: absolute;
+      bottom: 0;
+    }
+  }
+}
+
+.recipe-list {
+  margin: 0;
+  padding: 0;
+}
+
+.recipe-card {
+	padding: 0;
+  border-spacing: 0;
+  display: block;
+  background: @white;
+  height: 100px;
+  cursor: pointer;
+  .border-radius(3px);
+  overflow: hidden;
+  &:hover {
+    h3 { color: #000; }
+  }
+  margin-bottom: 4px;
+  min-width: 300px;
+  .shadow-default;
+
+  .recipe-card-content {
+    padding: @spacing;
+    vertical-align: top;
+    text-align: left;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: @font-size-small;
+    font-weight: normal;
+    color: @black;
+    i {
+      margin-right: @spacing-half;
+      color: @coral;
+    }
+  }
+  .author {
+    margin-top: @spacing-half;
+    color: @header-grey;
+    font-size: @font-size-smaller;
+  }
+  img {
+    width: 100px;
+  }
+}
+.notification {
+	background-color: @notification-red;
+	border-radius: 100px;
+	color: @white;
+	padding:@spacing-half;
+	font-size:@font-size-tiny;
+}
+.light-mask {
+  background: @white;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+
+.publish-bar {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  z-index: 5;
+  padding: @spacing;
+  background-color: @white;
+  border-top: 1px solid @grey-lines;
+  text-align: center;
+
+  a {
+    white-space: nowrap;
+    display: inline-block;
+    padding: @spacing @spacing-double;
+    color: @black;
+    i { margin-right: @spacing; }
+  }
+}
+
+.page-footer {
+  .shadow-default(0px,-1px);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.toast {
+  position: absolute;
+  bottom: 80px;
+  left: @spacing;
+  right: @spacing;
+  background: @black;
+  transition: all .5s;
+  color: @white;
+  font-size: @font-size-body;
+  .border-radius(5px);
+  text-align: center;
+  padding: @spacing;
+  pointer-events: none;
+}
+
+.toast.on {
+  opacity: 1;
+}
+
+.toast.off {
+  opacity: 0;
+}
+
+.app-tabs {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: @white;
+  z-index: 11;
+  .shadow-default(0, -1px);
+  .tabs-box {
+    .tabs {
+      a {
+        font-size: @font-size-head;
+        border-bottom:none;
+      }
+      a.selected {
+        border-bottom:none;
+      }
+    }
+  }
+}
+
+.header-button {
+  font-size: @font-size-head;
+  color: @header-grey;
+  padding: 0 @spacing-half;
+}
+
+.create-dialog {
+  position: absolute;
+  margin: auto !important;
+  width: 100% !important;
+  height: 100% !important;
+
+}
+
+.create-buttons {
+  background: @white;
+  position: absolute;
+  bottom: 60px;
+  border-spacing: @spacing-double;
+  a {
+    position: relative;
+    color: @black;
+    width: 50%;
+    text-align: center;
+    i, b {
+      display: block;
+    }
+    i {
+      font-size: @font-size-big;
+    }
+    b {
+      font-size: @font-size-small;
+      font-weight: normal;
+      margin-top: @spacing-half;
+    }
+    input {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+  }
+}
+
+@import "pages/sign-in.less";
+@import "pages/sign-up.less";
+@import "pages/user.less";
+@import "pages/home.less";
+@import "pages/search.less";
+@import "pages/recipe-thread.less";
+@import "pages/contact-list.less";
+@import "pages/inbox.less";
+@import "pages/comment.less";
+@import "pages/publish.less";
+@import "pages/post.less";

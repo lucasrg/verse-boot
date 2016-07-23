@@ -1,0 +1,61 @@
+// * {
+//   -webkit-transition: all 0.2s ease;
+//   -moz-transition:    all 0.2s ease;
+//   -ms-transition:     all 0.2s ease;
+//   -o-transition:      all 0.2s ease;
+// }
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+.clearfix {
+	clear:both;
+}
+
+input:-webkit-autofill {
+    background-color: #fff !important;
+}
+
+html {
+  background-color: @bg-color;
+  font-size: 20px;
+  font-family: Roboto, Helvetica, sans-serif;
+
+  .up-to-small-mobile({
+    font-size: 20px;
+  })
+}
+
+html, body {
+  overflow: hidden;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+form {
+  margin: 0;
+  padding: 0;
+}
+
+input, textarea {
+  font-size: @font-size-body;
+	font-family: Roboto, Helvetica, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+	&:visited {
+		color: inherit;
+	}
+}
