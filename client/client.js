@@ -1,7 +1,13 @@
 var verse = require('verse/client')
 var Cookies = require('js-cookie');
+var Languages = require('../app/context/Languages');
+var Context = require('../app/context/Context');
+var Router = require('../app/context/Router');
+var App = require('../app/App');
 
 document.addEventListener('DOMContentLoaded', function() {
+
+  var serverSideContext = window.__app_context__ || {};
 
   var context = Context({
     path: location.pathname+location.search,
@@ -9,12 +15,12 @@ document.addEventListener('DOMContentLoaded', function() {
     cookies: {
       session: Cookies.get('session')
     },
-    locale: (window.navigator.userLanguage || window.navigator.language)
+    locale: serverSideContext.locale
   });
 
-  if (window.__app_context__) {
+  if (serverSideContext.stores) {
     var reconcile = true;
-    context.stores = window.__app_context__;
+    context.stores = serverSideContext.stores;
   }
 
   verse.render({
@@ -23,9 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
     context:context,
     reconcile: reconcile
   });
-  if (!reconcile) {
-    Router.go(context);
-  }
+  if (!reconcile) Router.go(context);
 
 }, false);
 

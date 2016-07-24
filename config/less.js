@@ -5,14 +5,14 @@ var writefile = require('writefile')
 var config = require('./config');
 
 function compile(lessName, changedFileName) {
-  fs.readFile('./app/style/' + lessName + '.less', function (err, data) {
+  fs.readFile('./app/styles/' + lessName + '.less', function (err, data) {
     var dataString = data.toString();
     if (!dataString) {
       console.info('[Less] main.less is empty.');
       return;
     }
     less.render(dataString, {
-      paths: [__dirname + '/app/styles/'],
+      paths: [__dirname + '/../app/styles/'],
       filename: lessName + '.less',
       sourceMap: {
         sourceMapFileInline: true
@@ -22,7 +22,7 @@ function compile(lessName, changedFileName) {
         console.error('[Less] ' + err.type + ' Error: ' + err.message + ' in ' + err.filename + ':' + err.index + ':' + err.line);
         return;
       }
-      writefile('../public/static/css/' + lessName +'.' + config.version.css + '.css', output.css, function (err) {
+      writefile(__dirname+'/../public/static/css/' + lessName +'.' + config.version.css + '.css', output.css, function (err) {
         if (err) {
           console.error('[Less] failed to write', err);
         } else {
@@ -49,8 +49,8 @@ var watchCallback = function (event, filename) {
 };
 
 module.exports = function () {
-  fs.watch('../app/styles', watchCallback);
-  fs.watch('../app/styles/pages', watchCallback);
-  fs.watch('../app/styles/components', watchCallback);
+  fs.watch('./app/styles', watchCallback);
+  fs.watch('./app/styles/pages', watchCallback);
+  fs.watch('./app/styles/components', watchCallback);
   renderLess();
 }

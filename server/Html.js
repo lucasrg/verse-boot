@@ -3,9 +3,16 @@ var config = require('../config/config');
 
 module.exports = function(ctx) {
   var response = ctx.response;
-  if (response.reconcile) {
-    var reconcile = {tag:'script', render:'window.__app_context__ = '+JSON.stringify(ctx.stores)+';'}
+
+  var serverContext = {
+    config: config,
+    locale: ctx.request.locale
   }
+
+  if (response.reconcile) {
+    serverContext.reconcile = ctx.stores;
+  }
+  
   return {
     tag: 'html', render: [
       {tag:'head', render: [
@@ -17,7 +24,7 @@ module.exports = function(ctx) {
         {tag:'script', src: ctx.url.static('js/bundle', config.version.js, 'js')}
       ]},
       {tag:'body', render: App},
-      reconcile
+      {tag:'script', render:'window.__app_context__ = '+JSON.stringify(serverContext)+';'}
     ]
   }
 };

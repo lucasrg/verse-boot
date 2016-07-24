@@ -1,3 +1,3 @@
 module.exports = [
-  'en'
+  //TODO 'en', 'en-us', 'en-uk', 'pt', 'pt-br'
 ]

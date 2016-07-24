@@ -5,10 +5,10 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var path = require('path');
-var locale = require("locale");
 
-var supportedLocales = require('../app/i18n/Locales');
 var Html = require('./Html');
+
+var Languages = require('../app/context/Languages');
 var Context = require('../app/context/Context');
 var Router = require('../app/context/Router');
 
@@ -18,12 +18,11 @@ var server = require('http').Server(app);
 var isProduction = process.env.NODE_ENV === 'production';
 var port = process.env.PORT || 3000;
 var apiHost = process.env.API_HOST || 'localhost:3000';
-var publicPath = path.resolve(__dirname, 'public');
+var publicPath = path.resolve(__dirname, '..', 'public');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(locale(supportedLocales))
 
 if (isProduction) {
   var compression = require('compression')
@@ -54,12 +53,15 @@ if (isProduction) {
 }
 
 app.use(function (req, res) {
+
   var context = Context({
     path: req.path,
     userAgent: req.get('user-agent'),
     cookies: req.cookies,
-    locale: res.locale.best(supportedLocales).toString()
+    locale: Languages.locale(req.get('accept-language'))
   });
+
+  console.log(context);
 
   //TODO context.api.host = apiHost;
 
@@ -76,4 +78,5 @@ app.use(function (req, res) {
 
 server.listen(port, function () {
   console.info('Server running on port ' + port);
+  console.info('Public path ' + publicPath);
 });

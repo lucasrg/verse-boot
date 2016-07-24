@@ -1,3 +1,7 @@
+# Generated files
+public/static/css/main.*.css
+public/static/js/bundle.*.js
+
 # Logs
 logs
 *.log
