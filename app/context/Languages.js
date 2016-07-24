@@ -10,7 +10,6 @@ module.exports = {
     return bundle;
   },
   locale: function(value) {
-    console.log('TESTNG', value);
     var match;
     if (value) {
       value.toLowerCase().split(';').forEach(function (v1) {

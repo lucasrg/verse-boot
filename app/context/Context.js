@@ -1,4 +1,5 @@
 var Urls = require('./Urls');
+var Router = require('./Router');
 var Languages = require('./Languages');
 
 module.exports = function (request) {
@@ -9,6 +10,7 @@ module.exports = function (request) {
   //TODO stores
 
   ctx.url = Urls;
+  ctx.router = Router(ctx);
 
   if (request.cookies.session) {
     ctx.session = JSON.parse(request.cookies.session);
@@ -18,12 +20,6 @@ module.exports = function (request) {
   }
 
   ctx.request = request;
-  ctx.response = {
-    head: {
-      title: ctx.i18n.App.title
-    },
-    status: 200
-  };
 
   return ctx;
 }

@@ -10,7 +10,6 @@ var Html = require('./Html');
 
 var Languages = require('../app/context/Languages');
 var Context = require('../app/context/Context');
-var Router = require('../app/context/Router');
 
 var app = express();
 var server = require('http').Server(app);
@@ -55,13 +54,10 @@ if (isProduction) {
 app.use(function (req, res) {
 
   var context = Context({
-    path: req.path,
     userAgent: req.get('user-agent'),
     cookies: req.cookies,
     locale: Languages.locale(req.get('accept-language'))
   });
-
-  console.log(context);
 
   //TODO context.api.host = apiHost;
 
@@ -72,7 +68,7 @@ app.use(function (req, res) {
     }
   }
 
-  Router.go(context);
+  context.router.go(req.path);
 
 });
 

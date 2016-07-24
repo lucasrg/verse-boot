@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', function() {
   var serverSideContext = window.__app_context__ || {};
 
   var context = Context({
-    path: location.pathname+location.search,
     userAgent: navigator.userAgent,
     cookies: {
       session: Cookies.get('session')
@@ -29,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     context:context,
     reconcile: reconcile
   });
-  if (!reconcile) Router.go(context);
+  if (!reconcile) context.router.go(location.pathname+location.search);
 
 }, false);
 
