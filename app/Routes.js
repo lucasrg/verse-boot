@@ -1,15 +1,13 @@
 module.exports = {
   '/': function (ctx) {
-    //TODO ctx.actions.Home.show();
-    ctx.router.end({
-      head: {title: 'HOME!'}
-    })
+    ctx.actions.Home.show();
   },
-  '/items/?': function (ctx) {
+  '/item/?': function (ctx) {
     var id = ctx.request.params[0];
     //TODO ctx.actions.Item.show(id);
     ctx.router.end({
-      head: {title: 'ITEM '+(id ? id : 'NEW')}
+      head: {title: 'ITEM '+(id ? id : 'NEW')},
+      body: 'pages/ItemPage'
     })
   },
   '500': function (ctx) {

@@ -1,4 +1,4 @@
-var Locales = require('../i18n/Locales');
+var Locales = require('../Locales');
 
 module.exports = {
   cache: {},

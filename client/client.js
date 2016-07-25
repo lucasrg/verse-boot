@@ -1,8 +1,6 @@
 var verse = require('verse/client')
 var Cookies = require('js-cookie');
-var Languages = require('../app/context/Languages');
 var Context = require('../app/context/Context');
-var Router = require('../app/context/Router');
 var App = require('../app/App');
 
 document.addEventListener('DOMContentLoaded', function() {

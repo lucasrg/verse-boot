@@ -1,4 +1,7 @@
-var Urls = require('./Urls');
+var Actions = require('../Actions');
+var Stores = require('../Stores');
+var Urls = require('../Urls');
+
 var Router = require('./Router');
 var Languages = require('./Languages');
 
@@ -6,8 +9,13 @@ module.exports = function (request) {
   var ctx = {};
 
   //TODO api
-  //TODO actions
-  //TODO stores
+
+  ctx.actions = {};
+  Actions.forEach(function (name) {
+    ctx.actions[name] = require('../actions/'+name+'Actions')(ctx);
+  })
+
+  ctx.stores = Stores();
 
   ctx.url = Urls;
   ctx.router = Router(ctx);
