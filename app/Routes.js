@@ -3,12 +3,10 @@ module.exports = {
     ctx.actions.Home.show();
   },
   '/item/?': function (ctx) {
-    var id = ctx.request.params[0];
-    //TODO ctx.actions.Item.show(id);
-    ctx.router.end({
-      head: {title: 'ITEM '+(id ? id : 'NEW')},
-      body: 'pages/ItemPage'
-    })
+    ctx.actions.Item.show(ctx.request.params[0]);
+  },
+  '/compose/item/?': function (ctx) {
+    ctx.actions.Item.edit(ctx.request.params[0]);
   },
   '500': function (ctx) {
     //TODO

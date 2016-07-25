@@ -10,7 +10,7 @@ module.exports = {
       {tag:'h1', render:ctx.i18n.Home.title},
       {tag:'div', class:'items', render:ctx.stores.Home.items.map(function (item) {
         return Link(ctx, {
-          href: ctx.url.item(item),
+          href: ctx.url.item.view(item),
           render: ItemCard(ctx, {item: item})
         })
       })}

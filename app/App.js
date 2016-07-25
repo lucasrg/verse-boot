@@ -1,5 +1,7 @@
 var pages = {
   HomePage: require('./pages/HomePage'),
+  ItemPage: require('./pages/ItemPage'),
+  ItemEditorPage: require('./pages/ItemEditorPage'),
   NotFoundPage: require('./pages/NotFoundPage')
 }
 

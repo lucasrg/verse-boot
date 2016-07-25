@@ -5,8 +5,13 @@ module.exports = {
   home: function () {
     return '/'
   },
-  item: function (item) {
-    if (item) return '/item/'+item.id;
-    return '/item/'
+  item: {
+    view: function (item) {
+      return '/item/'+item.id;
+    },
+    edit: function (item) {
+      if (item) return '/compose/item/'+item.id;
+      return '/compose/item/'      
+    }
   }
 }
