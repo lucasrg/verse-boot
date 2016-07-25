@@ -3,13 +3,18 @@ var Routes = require('../Routes');
 module.exports = function (ctx) {
   return {
     history: [],
+    events: {},
     go: function (url) {
       this.history.push(url);
       this.route();
     },
     back: function () {
-      this.history.pop();
-      this.route();
+      if (this.history.length > 1) {
+        this.history.pop();
+        this.route();
+        return true;
+      }
+      return false;
     },
     route: function () {
       delete ctx.response;
@@ -53,6 +58,7 @@ module.exports = function (ctx) {
         ctx.request.pathname = pathname;
         ctx.request.query = query;
         ctx.request.params = params;
+        ctx.trigger('request');
         route(ctx);
       } else {
         this.end({status: 404});
@@ -64,6 +70,7 @@ module.exports = function (ctx) {
       ctx.response.head = ctx.response.head || { title: ctx.i18n.App.title};
       ctx.response.status = ctx.response.status || 200;
       ctx.trigger('response');
+      if (this.events.end) this.events.end(ctx)
     }
   }
 
