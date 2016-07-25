@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   window.onpopstate = function(event) {
     if (context.router.back()) {
-      history.pushState({}, document.title, location.pathname+location.search);
+      history.pushState({}, document.title, context.request.url);
     }
   }
 
