@@ -72,6 +72,12 @@ module.exports = function (ctx) {
       ctx.trigger('response');
       if (this.events.end) this.events.end(ctx)
     },
+    redirect: function (status, url) {
+      this.end({
+        status: status,
+        redirect: url
+      })
+    },
     error: function (error) {
       this.end({
         status: 500,

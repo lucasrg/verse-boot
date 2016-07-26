@@ -23,6 +23,10 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   context.router.events.end = function (ctx) {
+    if (ctx.response.redirect) {
+      window.location.href = ctx.response.redirect;
+      return;
+    }
     if (historyInitialized) {
       history.replaceState({}, ctx.response.head.title, ctx.request.url);
     } else {

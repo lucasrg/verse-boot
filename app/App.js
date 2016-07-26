@@ -11,10 +11,9 @@ module.exports = {
   id:'app',
   listen:['request', 'response'],
   render: function (ctx) {
-    if (ctx.response) {
-      return pages[ctx.response.body] || pages['NotFoundPage'];
-    } else {
+    if (!ctx.response || ctx.response.redirect) {
       return {tag:'div', class:'loader', render:ctx.i18n.App.loading}
     }
+    return pages[ctx.response.body] || pages['NotFoundPage'];
   }
 }

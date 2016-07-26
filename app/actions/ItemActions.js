@@ -2,6 +2,9 @@ module.exports = function (ctx) {
   return {
     show: function (id) {
       setTimeout(function () {
+        if (id < 1) {
+          return ctx.router.redirect(301, ctx.url.home());
+        }
         ctx.stores.Item.item = {id:id, name:'Item '+id};
         ctx.router.end({
           head: {title: ctx.i18n.Item.title(ctx.stores.Item.item)},

@@ -64,8 +64,12 @@ app.use(function (req, res) {
   context.trigger = function (args) {
     if (args == 'response') {
       try {
-        var html = verse.render({template: Html, context: this});
-        res.status(this.response.status).send(html);
+        if (this.response.redirect) {
+          res.redirect(this.response.status, this.response.redirect)
+        } else {
+          var html = verse.render({template: Html, context: this});
+          res.status(this.response.status).send(html);
+        }
       } catch (e) {
         console.error('Error at path:', req.path);
         console.error(e.stack);
