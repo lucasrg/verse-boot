@@ -71,6 +71,13 @@ module.exports = function (ctx) {
       ctx.response.status = ctx.response.status || 200;
       ctx.trigger('response');
       if (this.events.end) this.events.end(ctx)
+    },
+    error: function (error) {
+      this.end({
+        status: 500,
+        error: error,
+        body: 'ErrorPage'
+      })
     }
   }
 

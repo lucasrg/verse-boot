@@ -38,9 +38,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  window.onerror = function(errorMsg, url, lineNumber) {
-    //TODO render 500 error page
-    document.write("Error occured: " + errorMsg);
+  window.onerror = function(msg, file, line, col, error) {
+    context.router.error(msg)
     return false;
   }
 

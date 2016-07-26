@@ -2,7 +2,8 @@ var pages = {
   HomePage: require('./pages/HomePage'),
   ItemPage: require('./pages/ItemPage'),
   ItemEditorPage: require('./pages/ItemEditorPage'),
-  NotFoundPage: require('./pages/NotFoundPage')
+  NotFoundPage: require('./pages/NotFoundPage'),
+  ErrorPage: require('./pages/ErrorPage')
 }
 
 module.exports = {

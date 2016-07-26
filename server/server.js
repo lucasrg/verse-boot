@@ -63,8 +63,18 @@ app.use(function (req, res) {
 
   context.trigger = function (args) {
     if (args == 'response') {
-      var html = verse.render({template: Html, context: this});
-      res.status(this.response.status).send(html);
+      try {
+        var html = verse.render({template: Html, context: this});
+        res.status(this.response.status).send(html);
+      } catch (e) {
+        console.error('Error at path:', req.path);
+        console.error(e.stack);
+        if (this.response.status != 500) {
+          this.router.error(e);
+        } else {
+          res.status(500).render('error', { error: e });
+        }
+      }
     }
   }
 

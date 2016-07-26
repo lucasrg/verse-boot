@@ -18,5 +18,10 @@ module.exports = {
   NotFound: {
     title: 'Verse Boot - Not Found',
     message: 'Oops! Page not found (404)'
+  },
+  InternalError: {
+    title: 'Verse Boot - Error',
+    message: 'Oops! Internal Error (500)'
   }
+
 }
