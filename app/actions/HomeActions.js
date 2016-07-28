@@ -2,10 +2,10 @@ module.exports = function (ctx) {
   return {
     show: function () {
       setTimeout(function () {
-        ctx.stores.Home.items = [
-          {id:1, name:'Item 1'},
-          {id:2, name:'Item 2'},
-        ]
+        ctx.stores.Home.items = []
+        for (var i = 0; i < 30; i++) {
+          ctx.stores.Home.items.push({id:i, name:'Item '+i})
+        }
         ctx.router.end({
           head: {title: ctx.i18n.Home.title},
           body: 'HomePage'

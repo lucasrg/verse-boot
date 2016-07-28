@@ -15,5 +15,16 @@ module.exports = {
       return {tag:'div', class:'loader', render:ctx.i18n.App.loading}
     }
     return pages[ctx.response.body] || pages['NotFoundPage'];
+  },
+  events: {
+    render: function (e) {
+      if (e.context.response) {
+        var historyState = e.context.response.history;
+        if (historyState && historyState.scrollPosition) {
+          e.target.scrollTop = historyState.scrollPosition.y || 0;
+          e.target.scrollLeft = historyState.scrollPosition.x || 0;
+        }
+      }
+    }
   }
 }

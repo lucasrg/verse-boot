@@ -5,7 +5,12 @@ module.exports = function (ctx) {
     history: [],
     events: {},
     go: function (url) {
-      this.history.push(url);
+      var newState = { url: url }
+      if (this.events.go) {
+        var oldState = this.history[this.history.length-1];
+        if (oldState) this.events.go(oldState, newState, ctx);
+      }
+      this.history.push(newState);
       this.route();
     },
     back: function () {
@@ -19,9 +24,9 @@ module.exports = function (ctx) {
     route: function () {
       delete ctx.response;
 
-      var url = this.history[this.history.length-1];
+      var history = this.history[this.history.length-1];
 
-      var split = url.split('?');
+      var split = history.url.split('?');
 
       var query = {};
       if (split[1]) {
@@ -54,10 +59,11 @@ module.exports = function (ctx) {
       }
 
       if (route) {
-        ctx.request.url = url;
+        ctx.request.url = history.url;
         ctx.request.pathname = pathname;
         ctx.request.query = query;
         ctx.request.params = params;
+        ctx.request.history = history;
         ctx.trigger('request');
         route(ctx);
       } else {
@@ -69,6 +75,7 @@ module.exports = function (ctx) {
       ctx.response = response || {};
       ctx.response.head = ctx.response.head || { title: ctx.i18n.App.title};
       ctx.response.status = ctx.response.status || 200;
+      ctx.response.history = ctx.request.history;
       ctx.trigger('response');
       if (this.events.end) this.events.end(ctx)
     },

@@ -22,10 +22,23 @@ document.addEventListener('DOMContentLoaded', function() {
     context.stores = serverSideContext.stores;
   }
 
+
+  context.router.events.go = function (oldState, newState, ctx)  {
+    var app = document.getElementById('app');
+    oldState.scrollPosition = app ? {x: app.scrollLeft, y: app.scrollTop} : {};
+  }
+
   context.router.events.end = function (ctx) {
     if (ctx.response.redirect) {
       window.location.href = ctx.response.redirect;
       return;
+    }
+
+    var app = document.getElementById('app');
+    var historyState = ctx.response.history;
+    if (app && historyState && historyState.scrollPosition) {
+      app.scrollTop = historyState.scrollPosition.y || 0;
+      app.scrollLeft = historyState.scrollPosition.x || 0;
     }
     if (historyInitialized) {
       history.replaceState({}, ctx.response.head.title, ctx.request.url);
