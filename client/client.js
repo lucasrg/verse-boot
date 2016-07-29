@@ -34,11 +34,16 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
-    var app = document.getElementById('app');
-    var historyState = ctx.response.history;
-    if (app && historyState && historyState.scrollPosition) {
-      app.scrollTop = historyState.scrollPosition.y || 0;
-      app.scrollLeft = historyState.scrollPosition.x || 0;
+    if (ctx.response.history) {
+      setTimeout(function () {        
+        var app = document.getElementById('app');
+        var historyState = ctx.response.history;
+        delete ctx.response.history;
+        if (app && historyState && historyState.scrollPosition) {
+          app.scrollTop = historyState.scrollPosition.y || 0;
+          app.scrollLeft = historyState.scrollPosition.x || 0;
+        }
+      }, 0);
     }
     if (historyInitialized) {
       history.replaceState({}, ctx.response.head.title, ctx.request.url);
