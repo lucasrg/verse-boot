@@ -51,7 +51,10 @@ if (isProduction) {
   app.use('/favicon.ico',express.static(publicPath+'/static/favicon.ico'));
 }
 
-app.use(function (req, res) {
+app.use('/api', require('./api/api'));
+
+app.use(function (req, res, next) {
+  if (res.headersSent) return next();
 
   var context = Context({
     userAgent: req.get('user-agent'),
@@ -59,7 +62,7 @@ app.use(function (req, res) {
     locale: Languages.locale(req.get('accept-language'))
   });
 
-  //TODO context.api.host = apiHost;
+  context.api.host = apiHost;
 
   context.trigger = function (args) {
     if (args == 'response') {

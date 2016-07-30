@@ -19,8 +19,10 @@ module.exports = {
               {tag:'input', type:'submit', value:ctx.i18n.Item.save}
           ]
         },
-        submit: function (data, event) {
-          ctx.actions.Item.save(data);
+        events: {
+          submit: function (e, data) {
+            ctx.actions.Item.save(data);
+          }
         }
       }),
       {tag:'div', render:Link(ctx, {

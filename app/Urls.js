@@ -2,6 +2,9 @@ module.exports = {
   static: function (path, version, ext) {
     return version ? '/static/'+path+'.'+version+'.'+ext : '/static/'+path;
   },
+  auth: function () {
+    return '/sign-in'
+  },
   home: function () {
     return '/'
   },
@@ -11,7 +14,7 @@ module.exports = {
     },
     edit: function (item) {
       if (item) return '/compose/item/'+item.id;
-      return '/compose/item/'      
+      return '/compose/item/'
     }
   }
 }

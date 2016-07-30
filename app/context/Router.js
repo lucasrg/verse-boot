@@ -5,6 +5,7 @@ module.exports = function (ctx) {
     history: [],
     events: {},
     go: function (url) {
+      if (!url) throw Error('[router] invalid url');
       var newState = { url: url }
       if (this.events.go) {
         var oldState = this.history[this.history.length-1];
@@ -20,6 +21,9 @@ module.exports = function (ctx) {
         return true;
       }
       return false;
+    },
+    reload: function () {
+      this.route();
     },
     route: function () {
       delete ctx.response;
@@ -46,7 +50,13 @@ module.exports = function (ctx) {
       while (path.length > 0) {
         var key = path.join('/') + paramsKey;
         if (!key) key = '/';
-        route = Routes[key]
+
+        if (Routes.secure && Routes.secure[key]) {
+          route = Routes.secure[key];
+          var isSecuredRoute = true;
+        } else {
+          route = Routes[key]
+        }
         if (route) {
           break;
         }
@@ -56,6 +66,8 @@ module.exports = function (ctx) {
 
       if (!route) {
         route = Routes['404'];
+      } else if (isSecuredRoute && !ctx.auth.user) {
+        route = Routes['401'] || Routes['404'];
       }
 
       if (route) {

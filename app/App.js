@@ -2,6 +2,7 @@ var pages = {
   HomePage: require('./pages/HomePage'),
   ItemPage: require('./pages/ItemPage'),
   ItemEditorPage: require('./pages/ItemEditorPage'),
+  AuthPage: require('./pages/AuthPage'),
   NotFoundPage: require('./pages/NotFoundPage'),
   ErrorPage: require('./pages/ErrorPage')
 }

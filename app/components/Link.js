@@ -12,6 +12,8 @@ module.exports = function (ctx, props) {
         e.stopPropagation();
         if (props.back) {
           ctx.router.back();
+        } else if (props.click) {
+          props.click(e);
         } else {
           ctx.router.go(props.href);
         }

@@ -1,16 +1,7 @@
-function isIE (userAgent) {
-  var myNav = userAgent.toLowerCase();
-  return (myNav.indexOf('msie') != -1) ? parseInt(myNav.split('msie')[1]) : false;
-}
-
-function isAndroid (userAgent) {
-  var userAgent = userAgent.toLowerCase();
-  return (userAgent && userAgent.indexOf('android') >= 0);
-}
-
 module.exports = function (userAgent) {
+  var ua = userAgent ? userAgent.toLowerCase() : '';
   return {
-    ie: isIE(userAgent),
-    android: isAndroid(userAgent)
-  }  
+    ie: (ua.indexOf('msie') != -1) ? parseInt(ua.split('msie')[1]) : false,
+    android: userAgent.indexOf('android') >= 0
+  }
 }

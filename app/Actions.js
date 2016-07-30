@@ -1,3 +1,3 @@
 module.exports = [
-  'Home', 'Item'
+  'Auth', 'Home', 'Item'
 ]

@@ -2,13 +2,17 @@ var Actions = require('../Actions');
 var Stores = require('../Stores');
 var Urls = require('../Urls');
 
+var Browser = require('./Browser.js');
+var API = require('./API.js');
 var Router = require('./Router');
 var Languages = require('./Languages');
 
 module.exports = function (request) {
   var ctx = {};
 
-  //TODO api
+  ctx.browser = new Browser(request.userAgent);
+  ctx.api = new API(ctx, {sendDate: ctx.browser.ie});
+  ctx.auth = {};
 
   ctx.actions = {};
   Actions.forEach(function (name) {

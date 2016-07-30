@@ -15,6 +15,16 @@ module.exports = {
     save: 'Save',
     edit: 'Edit item'
   },
+  Auth: {
+    title: 'Verse Boot - Sign In',
+    username: 'Username (test)',
+    password: 'Password (123)',
+    signIn: 'Sign In',
+    signOut: 'Sign Out',
+    errors: {
+      '404': 'Username/password does not match'
+    }
+  },
   NotFound: {
     title: 'Verse Boot - Not Found',
     message: 'Oops! Page not found (404)'
