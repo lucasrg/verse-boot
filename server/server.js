@@ -53,12 +53,27 @@ if (isProduction) {
 
 app.use('/api', require('./api/api'));
 
+var AuthService = require('./api/services/AuthService');
+
 app.use(function (req, res, next) {
-  if (res.headersSent) return next();
+  if (res.headersSent) return;
+  if (req.cookies.session) {
+    AuthService.findByToken(req.cookies.session, function (err, session) {
+      if (err || !session) res.clearCookie('session', { path: '/' });
+      req.session = session;
+      next();
+    });
+  } else {
+    next();
+  }
+})
+
+app.use(function (req, res, next) {
+  if (res.headersSent) return;
 
   var context = Context({
     userAgent: req.get('user-agent'),
-    cookies: req.cookies,
+    session: req.session,
     locale: Languages.locale(req.get('accept-language'))
   });
 
@@ -79,7 +94,7 @@ app.use(function (req, res, next) {
         if (this.response.status != 500) {
           this.router.error(e);
         } else {
-          res.status(500).render('error', { error: e });
+          res.status(500).send({ error: e });
         }
       }
     }

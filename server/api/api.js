@@ -18,7 +18,7 @@ router.use(function (req, res, next) {
       var token = components[1];
       var userId = db.authorization[token] >= 0;
       if (userId) {
-        req.auth = {
+        req.session = {
           token: token,
           user: db.users[userId]
         };

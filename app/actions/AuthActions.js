@@ -1,7 +1,8 @@
+
 module.exports = function (ctx) {
   return {
     show: function () {
-      if (ctx.auth.user && ctx.request.pathname == ctx.url.auth()) {
+      if (ctx.session.user && ctx.request.pathname == ctx.url.auth()) {
         ctx.router.go(ctx.url.home());
       } else {
         ctx.router.end({
@@ -9,14 +10,6 @@ module.exports = function (ctx) {
           body: 'AuthPage'
         })
       }
-    },
-    grant: function (authorization) {
-      //TODO Cookies
-      ctx.auth = authorization;
-    },
-    revoke: function () {
-      //TODO clear cookies
-      ctx.auth = {};
     },
     signIn: function (data) {
       ctx.stores.Auth.loading = true;
@@ -28,13 +21,13 @@ module.exports = function (ctx) {
           ctx.stores.Auth.failure = res.body;
           ctx.trigger('stores.Auth');
         } else {
-          ctx.actions.Auth.grant(res.body);
+          ctx.session.grant(res.body);
           ctx.router.reload();
         }
       })
     },
     signOut: function () {
-      ctx.actions.Auth.revoke();
+      ctx.session.revoke();
       ctx.router.reload();
     }
   }

@@ -11,7 +11,7 @@ module.exports = {
         tag:'header',
         listen: ['stores.Auth'],
         render: function (ctx) {
-          if (ctx.auth.user) {
+          if (ctx.session.user) {
             var authButton = Link(ctx,{
               render:ctx.i18n.Auth.signOut,
               click: function () {

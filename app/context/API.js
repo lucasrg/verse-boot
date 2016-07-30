@@ -20,8 +20,8 @@ function callback(err, res){
 function inject(request) {
   request._api = this;
   request.callback = callback;
-  if (this.ctx.auth) {
-    request.set('Authorization','Bearer '+this.ctx.auth.token);
+  if (this.ctx.session.token) {
+    request.set('Authorization','Bearer '+this.ctx.session.token);
   }
   request.set('X-Requested-With', 'XMLHttpRequest');
   request.set('Expires', '-1');

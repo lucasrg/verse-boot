@@ -6,13 +6,14 @@ module.exports = function(ctx) {
 
   var serverContext = {
     config: config,
+    session: ctx.session.serialize(),
     locale: ctx.request.locale
   }
 
   if (response.reconcile) {
     serverContext.reconcile = ctx.stores;
   }
-  
+
   return {
     tag: 'html', render: [
       {tag:'head', render: [

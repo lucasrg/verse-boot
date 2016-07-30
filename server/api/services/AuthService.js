@@ -11,7 +11,18 @@ module.exports = {
         token: token,
         user: users[0]
       })
+    } else {
+      cb({code:404});
     }
-    cb({code:404});
+  },
+  findByToken: function (token, cb) {
+    if (db.authorization[token]) {
+      cb(null, {
+        token: token,
+        user: db.authorization[token]
+      })
+    } else {
+      cb({code: '404'})
+    }
   }
 }

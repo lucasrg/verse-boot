@@ -66,7 +66,7 @@ module.exports = function (ctx) {
 
       if (!route) {
         route = Routes['404'];
-      } else if (isSecuredRoute && !ctx.auth.user) {
+      } else if (isSecuredRoute && !ctx.session.token) {
         route = Routes['401'] || Routes['404'];
       }
 

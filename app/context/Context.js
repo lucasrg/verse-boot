@@ -4,6 +4,7 @@ var Urls = require('../Urls');
 
 var Browser = require('./Browser.js');
 var API = require('./API.js');
+var Session = require('./Session');
 var Router = require('./Router');
 var Languages = require('./Languages');
 
@@ -12,7 +13,7 @@ module.exports = function (request) {
 
   ctx.browser = new Browser(request.userAgent);
   ctx.api = new API(ctx, {sendDate: ctx.browser.ie});
-  ctx.auth = {};
+  ctx.session = new Session(request.session);
 
   ctx.actions = {};
   Actions.forEach(function (name) {
@@ -24,9 +25,8 @@ module.exports = function (request) {
   ctx.url = Urls;
   ctx.router = Router(ctx);
 
-  if (request.cookies.session) {
-    ctx.session = JSON.parse(request.cookies.session);
-    ctx.i18n = Languages.get(session.locale);
+  if (request.session) {
+    ctx.i18n = Languages.get(ctx.session.locale || request.locale);
   } else {
     ctx.i18n = Languages.get(request.locale);
   }

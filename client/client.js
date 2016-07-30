@@ -11,9 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var context = Context({
     userAgent: navigator.userAgent,
-    cookies: {
-      session: Cookies.get('session')
-    },
+    session: serverSideContext.session,
     locale: serverSideContext.locale
   });
 
@@ -35,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     if (ctx.response.history) {
-      setTimeout(function () {        
+      setTimeout(function () {
         var app = document.getElementById('app');
         var historyState = ctx.response.history;
         delete ctx.response.history;
