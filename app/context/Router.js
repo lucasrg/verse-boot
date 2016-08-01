@@ -46,6 +46,7 @@ module.exports = function (ctx) {
       var params = [];
       var paramsKey = '';
       var route;
+      var publicRoute;
 
       while (path.length > 0) {
         var key = path.join('/') + paramsKey;
@@ -53,6 +54,7 @@ module.exports = function (ctx) {
 
         if (Routes.secure && Routes.secure[key]) {
           route = Routes.secure[key];
+          publicRoute = Routes[key];
           var isSecuredRoute = true;
         } else {
           route = Routes[key]
@@ -66,8 +68,8 @@ module.exports = function (ctx) {
 
       if (!route) {
         route = Routes['404'];
-      } else if (isSecuredRoute && !ctx.session.token) {
-        route = Routes['401'] || Routes['404'];
+      } else if (isSecuredRoute && !ctx.session.active) {
+        route = publicRoute || Routes['401'] || Routes['404'];
       }
 
       if (route) {

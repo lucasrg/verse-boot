@@ -4,15 +4,8 @@ var UserService = {
   serialize: function (user) {
     return {
       id: user.id,
-      username: user.usernae
+      username: user.username
     }
-  },
-  save: function (user) {
-    if (!user.id) user.id = db.generateId();
-    return UserService.serialize(user);
-  },
-  delete: function (id) {
-    delete db.users[id];
   },
   findByUsernameAndPassword: function (username, password) {
     var result = [];

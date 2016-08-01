@@ -6,21 +6,18 @@ module.exports = {
     var users = UserService.findByUsernameAndPassword(username, password);
     if (users[0]) {
       var token = db.generateId();
-      db.authorization[token] = users[0];
-      cb(null, {
+      db.sessions[token] = {
         token: token,
         user: users[0]
-      })
+      };
+      cb(null, db.sessions[token]);
     } else {
       cb({code:404});
     }
   },
   findByToken: function (token, cb) {
-    if (db.authorization[token]) {
-      cb(null, {
-        token: token,
-        user: db.authorization[token]
-      })
+    if (db.sessions[token]) {
+      cb(null, db.sessions[token])
     } else {
       cb({code: '404'})
     }

@@ -13,11 +13,11 @@ module.exports = {
           return [
             {tag:'field', render:[
               {tag:'label', render:ctx.i18n.Auth.username},
-              {tag:'input', name:'username'}
+              {tag:'input', name:'username', value:'test'}
             ]},
             {tag:'field', render:[
               {tag:'label', render:ctx.i18n.Auth.password},
-              {tag:'input', name:'password', type:'password'}
+              {tag:'input', name:'password', type:'password', value:'123'}
             ]},
             {tag:'field', render: [
               {tag:'input', type:'submit', value: ctx.i18n.Auth.signIn}

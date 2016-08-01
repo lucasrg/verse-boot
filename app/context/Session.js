@@ -2,8 +2,11 @@ var Cookies = require('js-cookie');
 
 var Session = function (credentials) {
   if (credentials) {
+    this.active = true;
     this.token = credentials.token;
     this.user = credentials.user;
+  } else {
+    this.active = false;
   }
 }
 
@@ -17,6 +20,7 @@ Session.prototype.serialize = function () {
 }
 
 Session.prototype.grant = function (credentials) {
+  this.active = true;
   this.token = credentials.token;
   this.user = credentials.user;
   Cookies.set('session', this.token, { path:'/', expires: 90 });
@@ -26,6 +30,7 @@ Session.prototype.grant = function (credentials) {
 };
 
 Session.prototype.revoke = function () {
+  this.active = false;
   delete this.token;
   delete this.user;
   Cookies.remove('session');

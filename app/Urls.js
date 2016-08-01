@@ -13,8 +13,8 @@ module.exports = {
       return '/item/'+item.id;
     },
     edit: function (item) {
-      if (item) return '/compose/item/'+item.id;
-      return '/compose/item/'
+      if (item) return '/edit/item/'+item.id;
+      return '/edit/item/'
     }
   }
 }

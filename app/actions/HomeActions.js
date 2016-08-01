@@ -1,16 +1,21 @@
 module.exports = function (ctx) {
   return {
     show: function () {
-      setTimeout(function () {
-        ctx.stores.Home.items = []
-        for (var i = 0; i < 30; i++) {
-          ctx.stores.Home.items.push({id:i, name:'Item '+i})
-        }
+      ctx.api.get('/api/items/').end(function (err, res) {
+        if (err) return ctx.router.error(err);
+        ctx.stores.Home.items = res.body;
         ctx.router.end({
           head: {title: ctx.i18n.Home.title},
           body: 'HomePage'
         })
-      }, 1000)
+      })
+    },
+    showUnauthorized: function () {
+      ctx.stores.Home.items = [];
+      ctx.router.end({
+        head: {title: ctx.i18n.Home.title},
+        body: 'HomePage'
+      })
     }
   }
 }

@@ -1,7 +1,9 @@
 module.exports = function () {
   return {
     Auth: {},
-    Home: {},
+    Home: {
+      items: []
+    },
     Item: {}
   }
 }

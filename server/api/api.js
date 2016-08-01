@@ -1,7 +1,6 @@
 var router = require('express').Router();
-var ArtistService = require('./services/ArtistService');
 var AuthService = require('./services/AuthService');
-var UserService = require('./services/UserService');
+var ItemService = require('./services/ItemService');
 
 router.route('/sign-in/').post(function(req, res) {
   AuthService.signIn(req.body.username,req.body.password, function (err, data) {
@@ -11,31 +10,31 @@ router.route('/sign-in/').post(function(req, res) {
 });
 
 router.use(function (req, res, next) {
-  var authorization = req.get('Authorization');
-  if (authorization) {
-    var components = authorization.split(' ');
-    if (components[0] == 'Bearer') {
-      var token = components[1];
-      var userId = db.authorization[token] >= 0;
-      if (userId) {
-        req.session = {
-          token: token,
-          user: db.users[userId]
-        };
-        next();
-        return;
-      }
-    }
+  if (req.session) {
+    next();
+  } else {
+    res.status(401).json({code:'401'});
   }
-  res.status(401).json({message:'Unauthorized'});
 })
 
-router.route('/artists/').
-  post(function (req, res) {
-    res.send(ArtistService.save(req.body));
+router.route('/items/:id').
+  put(function (req, res) {
+    res.json(ItemService.update(req.params.id, req.body));
   }).
   get(function (req, res) {
-    res.send(ArtistService.find());
-  })
+    console.log('REQUEST items', req.params);
+    res.json(ItemService.findOne(req.params.id));
+  }).
+  delete(function (req, res) {
+    res.json(ItemService.delete(req.params.id));
+  });
+
+router.route('/items/').
+  post(function (req, res) {
+    res.json(ItemService.create(req.body));
+  }).
+  get(function (req, res) {
+    res.json(ItemService.find());
+  });
 
 module.exports = router;

@@ -1,14 +1,17 @@
 module.exports = {
   secure: {
+    '/': function (ctx) {
+      ctx.actions.Home.show();
+    },
     '/item/?': function (ctx) {
       ctx.actions.Item.show(ctx.request.params[0]);
     },
-    '/compose/item/?': function (ctx) {
+    '/edit/item/?': function (ctx) {
       ctx.actions.Item.edit(ctx.request.params[0]);
     }
   },
   '/': function (ctx) {
-    ctx.actions.Home.show();
+    ctx.actions.Home.showUnauthorized();
   },
   '/sign-in': function (ctx) {
     ctx.actions.Auth.show();

@@ -9,6 +9,9 @@ var API = function (ctx, options) {
 }
 
 function callback(err, res){
+  if (!err && res.status != 200) {
+    err = res.body;
+  }
   if (this._api.events.end) {
     this._api.events.end(err, res);
   }

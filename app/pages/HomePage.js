@@ -1,5 +1,5 @@
 var Link = require('../components/Link');
-var ItemCard = require('../components/ItemCard');
+var TaskListItem = require('../components/TaskListItem');
 
 module.exports = {
   tag:'div',
@@ -13,7 +13,10 @@ module.exports = {
         render: function (ctx) {
           if (ctx.session.user) {
             var authButton = Link(ctx,{
-              render:ctx.i18n.Auth.signOut,
+              render:[
+                {tag:'b', render: ctx.session.user.username},
+                {tag:'span', render: ctx.i18n.Auth.signOut}
+              ],
               click: function () {
                 ctx.actions.Auth.signOut();
               }
@@ -31,7 +34,7 @@ module.exports = {
       {tag:'div', class:'items', render:ctx.stores.Home.items.map(function (item) {
         return Link(ctx, {
           href: ctx.url.item.view(item),
-          render: ItemCard(ctx, {item: item})
+          render: TaskListItem(ctx, {task: item})
         })
       })}
     ]

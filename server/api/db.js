@@ -9,46 +9,22 @@ module.exports = {
       password: '123'
     }
   },
-  authorization: {},
-  artists: [
-    {
-      name: 'Beatles',
-      members: ['John', 'Paul', 'George', 'Ringo'],
-      albuns: [
-        {
-          name: 'Abbey Road',
-          year: 1969,
-          songs: [
-            { track:1, name: 'Come together'},
-            { track:2, name: 'Something'},
-            { track:3, name: 'Maxwell\'s Silver Hammer'}
-          ]
-        }
-      ]
-    },
-    {
-      name: 'Rolling Stones',
-      members: ['Mick', 'Keith', 'Ronnie', 'Charlie'],
-      albuns: [
-        {
-          name: "The Rolling Stones",
-          year: 1964,
-          songs: [
-            { track: 1, name: 'Route 66' },
-            { track: 2, name: 'I Just Want to Make Love to You' },
-            { track: 3, name: 'Honest I do' }
-          ]
-        },
-        {
-          name: "Aftermath",
-          year: 1966,
-          songs: [
-            { track: 1, name: 'Paint It Black' },
-            { track: 2, name: 'Stupid Girl' },
-            { track: 3, name: 'Lady Jane' }
-          ]
-        }
-      ]
-    }
-  ]
+  sessions: {},
+  items: {
+    '1': { id:1, name: 'Task 1', done: false },
+    '2': { id:2, name: 'Task 2', done: false },
+    '3': { id:3, name: 'Task 3', done: false },
+    '4': { id:4, name: 'Task 4', done: false },
+    '5': { id:5, name: 'Task 5', done: false },
+    '6': { id:6, name: 'Task 6', done: false },
+    '7': { id:7, name: 'Task 7', done: false },
+    '8': { id:8, name: 'Task 8', done: false },
+    '9': { id:9, name: 'Task 9', done: false },
+    '10': { id:10, name: 'Task 10', done: false },
+    '11': { id:11, name: 'Task 11', done: false },
+    '12': { id:12, name: 'Task 12', done: false },
+    '13': { id:13, name: 'Task 13', done: false },
+    '14': { id:14, name: 'Task 14', done: false },
+    '15': { id:15, name: 'Task 15', done: false }
+  }
 }

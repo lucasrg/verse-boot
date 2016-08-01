@@ -16,7 +16,7 @@ var server = require('http').Server(app);
 
 var isProduction = process.env.NODE_ENV === 'production';
 var port = process.env.PORT || 3000;
-var apiHost = process.env.API_HOST || 'localhost:3000';
+var apiHost = process.env.API_HOST || ('http://localhost:'+port);
 var publicPath = path.resolve(__dirname, '..', 'public');
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -51,14 +51,23 @@ if (isProduction) {
   app.use('/favicon.ico',express.static(publicPath+'/static/favicon.ico'));
 }
 
-app.use('/api', require('./api/api'));
-
 var AuthService = require('./api/services/AuthService');
-
 app.use(function (req, res, next) {
-  if (res.headersSent) return;
-  if (req.cookies.session) {
-    AuthService.findByToken(req.cookies.session, function (err, session) {
+
+  var token;
+
+  var authorization = req.get('Authorization');
+  if (authorization) {
+    var components = authorization.split(' ');
+    if (components[0] == 'Bearer') {
+      token = components[1];
+    }
+  } else if (req.cookies.session) {
+    token = req.cookies.session;
+  }
+
+  if (token) {
+    AuthService.findByToken(token, function (err, session) {
       if (err || !session) res.clearCookie('session', { path: '/' });
       req.session = session;
       next();
@@ -67,6 +76,8 @@ app.use(function (req, res, next) {
     next();
   }
 })
+
+app.use('/api', require('./api/api'));
 
 app.use(function (req, res, next) {
   if (res.headersSent) return;
@@ -79,8 +90,11 @@ app.use(function (req, res, next) {
 
   context.api.host = apiHost;
 
+  console.log('REQUEST', req.path);
+
   context.trigger = function (args) {
     if (args == 'response') {
+      console.log('RESPONSE', this.response);
       try {
         if (this.response.redirect) {
           res.redirect(this.response.status, this.response.redirect)

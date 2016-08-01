@@ -11,7 +11,8 @@ module.exports = function (ctx, props) {
         if (props.events && props.events.submit) {
           var data = {};
           Object.keys(e.target.elements).forEach(function (key) {
-            data[key] = e.target.elements[key].value;
+            var el = e.target.elements[key];
+            if (el.name) data[key] = el.value;
           })
           props.events.submit(e, data)
         }

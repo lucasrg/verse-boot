@@ -1,5 +1,6 @@
 var Form = require('../components/Form');
 var Link = require('../components/Link');
+var Checkbox = require('../components/Checkbox');
 
 module.exports = {
   tag:'div',
@@ -9,10 +10,24 @@ module.exports = {
     var item = ctx.stores.Item.item;
     return [
       Form(ctx,{
-        listen: ['stores.Item.saving'],
+        listen: ['stores.Item.done', 'stores.Item.saving'],
         render: function () {
           return [
-            {tag:'input', name:'name', value:item.name},
+            {tag:'field', render:[
+              {tag:'label', render:ctx.i18n.Item.name},
+              {tag:'input', name:'name', value:item.name},
+            ]},
+            {tag:'field', render:[
+              {tag:'label', render:ctx.i18n.Item.done},
+              Checkbox(ctx, {
+                checked: item.done,
+                events: {
+                  click: function (e) {
+                    ctx.actions.Item.setDone(!item.done);
+                  }
+                }
+              })
+            ]},
             ctx.stores.Item.saving ?
               {tag:'div', render:ctx.i18n.Item.saving}
               :
@@ -21,7 +36,10 @@ module.exports = {
         },
         events: {
           submit: function (e, data) {
-            ctx.actions.Item.save(data);
+            ctx.actions.Item.save({
+              name: data.name,
+              done: item.done
+            });
           }
         }
       }),
