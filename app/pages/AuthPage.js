@@ -3,7 +3,7 @@ var Form = require('../components/Form');
 
 module.exports = {
   tag:'div',
-  class:'page.auth',
+  class:'page auth-page',
   render: function (ctx) {
     return [
       {tag:'h1', render:ctx.i18n.Auth.title},

@@ -22,7 +22,6 @@ router.route('/items/:id').
     res.json(ItemService.update(req.params.id, req.body));
   }).
   get(function (req, res) {
-    console.log('REQUEST items', req.params);
     res.json(ItemService.findOne(req.params.id));
   }).
   delete(function (req, res) {

@@ -1,4 +1,12 @@
 @import "normalize.less";
+@import "constants.less";
+
+@import "components/task-list-item.less";
+@import "components/header.less";
+
+@import "pages/auth-page.less";
+@import "pages/home-page.less";
+@import "pages/item-page.less";
 
 #app {
   overflow: auto;
@@ -9,4 +17,19 @@
   right: 0;
   width: 100%;
   height: 100%;
+}
+
+.loader {
+  display: block;
+  margin: @spacing-double;
+  font-size: @font-size-small;
+  color: @color-loader;
+  text-align: center;
+}
+
+.page {
+  h1 {
+    margin: @spacing;
+    font-size: @font-size-larger;
+  }
 }

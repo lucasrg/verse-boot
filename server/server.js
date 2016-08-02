@@ -89,11 +89,8 @@ app.use(function (req, res, next) {
 
   context.api.host = apiHost;
 
-  console.log('REQUEST', req.path);
-
   context.trigger = function (args) {
     if (args == 'response') {
-      console.log('RESPONSE', this.response);
       try {
         if (this.response.redirect) {
           res.redirect(this.response.status, this.response.redirect)

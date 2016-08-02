@@ -13,7 +13,9 @@ module.exports = {
     },
     saving: 'Saving...',
     save: 'Save',
-    edit: 'Edit item'
+    edit: 'Edit item',
+    done: 'Done',
+    name: 'Name'
   },
   Auth: {
     title: 'Verse Boot - Sign In',

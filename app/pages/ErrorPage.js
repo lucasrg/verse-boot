@@ -2,7 +2,7 @@ var Link = require('../components/Link');
 
 module.exports = {
   tag:'div',
-  class:'page.internal-error',
+  class:'page internal-error-page',
   render: function (ctx) {
     return [
       {tag:'h1', render:ctx.i18n.InternalError.title},

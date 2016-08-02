@@ -6,12 +6,12 @@ module.exports = function (ctx, props) {
     tag:'div',
     class: 'task-list-item',
     render: [
+      Checkbox(ctx, {
+        checked: props.task.done
+      }),
       Link(ctx, {
         href: ctx.urls.item.view(props.task),
         render: {tag:'h2', render:props.task.name}
-      }),
-      Checkbox(ctx, {
-        checked: props.task.done
       })
     ]
   }

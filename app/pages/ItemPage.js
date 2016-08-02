@@ -1,16 +1,18 @@
+var Header = require('../components/Header');
 var Link = require('../components/Link');
 
 module.exports = {
   tag:'div',
-  class:'page.item',
+  class:'page item-page',
   listen: ['stores.Item'],
   render: function (ctx) {
     var item = ctx.stores.Item.item;
     return [
+      Header,
       {tag:'div', render:[
-        item.done ? {tag:'s', render:item.name} : {tag:'h1', render:item.name},
+        item.done ? {tag:'s', class:'item', render:item.name} : {tag:'span', class:'item', render:item.name},
       ]},
-      {tag:'div', render:[
+      {tag:'div', class:'view-actions', render:[
         Link(ctx, {
           href: ctx.urls.item.edit(item),
           render: ctx.i18n.Item.edit
