@@ -2,7 +2,7 @@ module.exports = function (ctx) {
   return {
     show: function (id) {
       ctx.api.get('/api/items/'+id).end(function (err, res) {
-        if (err) return ctx.router.redirect(301, ctx.url.home());
+        if (err) return ctx.router.redirect(301, ctx.urls.home());
         ctx.stores.Item.item = res.body;
         ctx.router.end({
           head: {title: ctx.i18n.Item.title(ctx.stores.Item.item)},
@@ -13,7 +13,7 @@ module.exports = function (ctx) {
     edit: function (id) {
       if (id) {
         ctx.api.get('/api/items/'+id).end(function (err, res) {
-          if (err) return ctx.router.redirect(301, ctx.url.home());
+          if (err) return ctx.router.redirect(301, ctx.urls.home());
           ctx.stores.Item.item = res.body;
           ctx.router.end({
             head: {title: ctx.i18n.Item.title(ctx.stores.Item.item)},
@@ -40,7 +40,7 @@ module.exports = function (ctx) {
 
         ctx.stores.Item.saving = false;
         ctx.trigger('stores.Item.saving');
-        ctx.router.go(ctx.url.item.view(ctx.stores.Item.item));
+        ctx.router.go(ctx.urls.item.view(ctx.stores.Item.item));
       }
 
       var id = ctx.stores.Item.item.id;

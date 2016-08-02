@@ -1,6 +1,8 @@
-var Actions = require('../Actions');
-var Stores = require('../Stores');
-var Urls = require('../Urls');
+var Actions = require('../app/Actions');
+var Stores = require('../app/Stores');
+var Urls = require('../app/Urls');
+var Routes = require('../app/Routes');
+var Locales = require('../app/Locales');
 
 var Browser = require('./Browser.js');
 var API = require('./API.js');
@@ -16,20 +18,15 @@ module.exports = function (request) {
   ctx.session = new Session(request.session);
 
   ctx.actions = {};
-  Actions.forEach(function (name) {
-    ctx.actions[name] = require('../actions/'+name+'Actions')(ctx);
+  Object.keys(Actions).forEach(function (name) {
+    ctx.actions[name] = Actions[name](ctx);
   })
 
   ctx.stores = Stores();
 
-  ctx.url = Urls;
-  ctx.router = Router(ctx);
-
-  if (request.session) {
-    ctx.i18n = Languages.get(ctx.session.locale || request.locale);
-  } else {
-    ctx.i18n = Languages.get(request.locale);
-  }
+  ctx.urls = Urls;
+  ctx.router = Router(ctx, Routes);
+  ctx.i18n = Languages.get(Locales, ctx.session.locale || request.locale);
 
   ctx.request = request;
 

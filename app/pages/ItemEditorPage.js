@@ -44,7 +44,7 @@ module.exports = {
         }
       }),
       {tag:'div', render:Link(ctx, {
-        href: ctx.url.home(),
+        href: ctx.urls.home(),
         render: ctx.i18n.App.back
       })}
     ]

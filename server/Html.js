@@ -21,8 +21,8 @@ module.exports = function(ctx) {
         {tag:'meta', name:"mobile-web-app-capable", content:"yes"},
         {tag:'meta', name:"apple-mobile-web-app-capable", content:"yes"},
         {tag:'title', render:response.head.title},
-        {tag:'link', href: ctx.url.static('css/main', config.version.css, 'css'), rel:'stylesheet', media:'all'},
-        {tag:'script', src: ctx.url.static('js/bundle', config.version.js, 'js')}
+        {tag:'link', href: ctx.urls.static('css/main', config.version.css, 'css'), rel:'stylesheet', media:'all'},
+        {tag:'script', src: ctx.urls.static('js/bundle', config.version.js, 'js')}
       ]},
       {tag:'body', render: App},
       {tag:'script', render:'window.__app_context__ = '+JSON.stringify(serverContext)+';'}

@@ -2,8 +2,8 @@
 module.exports = function (ctx) {
   return {
     show: function () {
-      if (ctx.session.user && ctx.request.pathname == ctx.url.auth()) {
-        ctx.router.go(ctx.url.home());
+      if (ctx.session.user && ctx.request.pathname == ctx.urls.auth()) {
+        ctx.router.go(ctx.urls.home());
       } else {
         ctx.router.end({
           head: { title: ctx.i18n.Auth.title },

@@ -1,6 +1,6 @@
 var verse = require('verse/client')
 var Cookies = require('js-cookie');
-var Context = require('../app/context/Context');
+var Context = require('../context/Context');
 var App = require('../app/App');
 
 var historyInitialized = false;

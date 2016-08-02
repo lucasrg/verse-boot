@@ -1,3 +1,5 @@
-module.exports = [
-  'Auth', 'Home', 'Item'
-]
+module.exports = {
+  'Auth': require('./actions/AuthActions'),
+  'Home': require('./actions/HomeActions'),
+  'Item': require('./actions/ItemActions')
+}

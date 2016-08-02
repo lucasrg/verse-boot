@@ -23,7 +23,7 @@ module.exports = {
             })
           } else {
             var authButton = Link(ctx,{
-              href:ctx.url.auth(),
+              href:ctx.urls.auth(),
               render:ctx.i18n.Auth.signIn
             })
           }
@@ -33,7 +33,7 @@ module.exports = {
       {tag:'h1', render:ctx.i18n.Home.title},
       {tag:'div', class:'items', render:ctx.stores.Home.items.map(function (item) {
         return Link(ctx, {
-          href: ctx.url.item.view(item),
+          href: ctx.urls.item.view(item),
           render: TaskListItem(ctx, {task: item})
         })
       })}

@@ -1,6 +1,4 @@
-var Routes = require('../Routes');
-
-module.exports = function (ctx) {
+module.exports = function (ctx, routes) {
   return {
     history: [],
     events: {},
@@ -52,12 +50,12 @@ module.exports = function (ctx) {
         var key = path.join('/') + paramsKey;
         if (!key) key = '/';
 
-        if (Routes.secure && Routes.secure[key]) {
-          route = Routes.secure[key];
-          publicRoute = Routes[key];
+        if (routes.secure && routes.secure[key]) {
+          route = routes.secure[key];
+          publicRoute = routes[key];
           var isSecuredRoute = true;
         } else {
-          route = Routes[key]
+          route = routes[key]
         }
         if (route) {
           break;
@@ -67,9 +65,9 @@ module.exports = function (ctx) {
       }
 
       if (!route) {
-        route = Routes['404'];
+        route = routes['404'];
       } else if (isSecuredRoute && !ctx.session.active) {
-        route = publicRoute || Routes['401'] || Routes['404'];
+        route = publicRoute || routes['401'] || routes['404'];
       }
 
       if (route) {

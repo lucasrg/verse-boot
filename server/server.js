@@ -8,8 +8,7 @@ var path = require('path');
 
 var Html = require('./Html');
 
-var Languages = require('../app/context/Languages');
-var Context = require('../app/context/Context');
+var Context = require('../context/Context');
 
 var app = express();
 var server = require('http').Server(app);
@@ -85,7 +84,7 @@ app.use(function (req, res, next) {
   var context = Context({
     userAgent: req.get('user-agent'),
     session: req.session,
-    locale: Languages.locale(req.get('accept-language'))
+    locale: req.get('accept-language')
   });
 
   context.api.host = apiHost;

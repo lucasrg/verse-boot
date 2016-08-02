@@ -12,11 +12,11 @@ module.exports = {
       ]},
       {tag:'div', render:[
         Link(ctx, {
-          href: ctx.url.item.edit(item),
+          href: ctx.urls.item.edit(item),
           render: ctx.i18n.Item.edit
         }),
         Link(ctx, {
-          href: ctx.url.home(),
+          href: ctx.urls.home(),
           render: ctx.i18n.App.back
         })
       ]}
