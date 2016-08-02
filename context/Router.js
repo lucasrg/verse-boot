@@ -83,9 +83,9 @@ module.exports = function (ctx, routes) {
       }
 
     },
-    end: function (response) {
-      ctx.response = response || {};
-      ctx.response.head = ctx.response.head || { title: ctx.i18n.App.title};
+    end: function (body, head) {
+      ctx.response = {body: body};
+      ctx.response.head = head || { title: ctx.i18n.App.title };
       ctx.response.status = ctx.response.status || 200;
       ctx.response.history = ctx.request.history;
       ctx.trigger('response');
