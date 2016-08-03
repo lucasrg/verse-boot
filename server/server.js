@@ -2,6 +2,7 @@
 
 var verse = require('verse/server');
 var express = require('express');
+var httpProxy = require('http-proxy');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var path = require('path');
@@ -12,10 +13,12 @@ var Context = require('../context/Context');
 
 var app = express();
 var server = require('http').Server(app);
+var superagent = require('superagent');
 
 var isProduction = process.env.NODE_ENV === 'production';
 var port = process.env.PORT || 3000;
-var apiHost = process.env.API_HOST || ('http://localhost:'+port);
+var apiPort = process.env.API_PORT || 3010;
+var apiHost = process.env.API_HOST || 'http://localhost';
 var publicPath = path.resolve(__dirname, '..', 'public');
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,7 +36,6 @@ if (isProduction) {
   var bundle = require('../config/webpack.bundler.js');
   var less = require('../config/less.js');
   var instant = require('instant');
-  var httpProxy = require('http-proxy');
   var proxy = httpProxy.createProxyServer();
 
   bundle();
@@ -50,44 +52,49 @@ if (isProduction) {
   app.use('/favicon.ico',express.static(publicPath+'/static/favicon.ico'));
 }
 
-var AuthService = require('./api/services/AuthService');
+
+//-------------------API SERVER--------------------------------
+var apiServer = require('../api/server');
+var apiProxy = require('express-http-proxy');
+
+app.use('/api', apiProxy(apiHost+':'+apiPort, {
+  forwardPath: function(req, res) {
+    return '/api'+req.path;
+  },
+  reqAsBuffer: true
+}));
+
+apiServer.listen();
+//-----------------------------------------------------------
+
 app.use(function (req, res, next) {
 
-  var token;
-
-  var authorization = req.get('Authorization');
-  if (authorization) {
-    var components = authorization.split(' ');
-    if (components[0] == 'Bearer') {
-      token = components[1];
-    }
-  } else if (req.cookies.session) {
-    token = req.cookies.session;
-  }
+  var token = req.cookies.session;
 
   if (token) {
-    AuthService.findByToken(token, function (err, session) {
-      if (err || !session) res.clearCookie('session', { path: '/' });
-      req.session = session;
+    var sessionApiURL = apiHost+':'+apiPort+'/api/session/'+token;
+    superagent.get(sessionApiURL).end(function (err, apiRes) {
+      if (err) {
+        console.error('API unreachable', err);
+        return res.status(500).json({code:500, message:'API unreachable'});
+      }
+      if (!apiRes.body) res.clearCookie('session', { path: '/' });
+      req.session = apiRes.body;
       next();
-    });
+    })
   } else {
     next();
   }
 })
 
-app.use('/api', require('./api/api'));
-
 app.use(function (req, res, next) {
-  if (res.headersSent) return;
-
   var context = Context({
     userAgent: req.get('user-agent'),
     session: req.session,
     locale: req.get('accept-language')
   });
 
-  context.api.host = apiHost;
+  context.api.host = apiHost+':'+apiPort;
 
   context.trigger = function (args) {
     if (args == 'response') {
@@ -104,7 +111,7 @@ app.use(function (req, res, next) {
         if (this.response.status != 500) {
           this.router.error(e);
         } else {
-          res.status(500).send({ error: e });
+          res.status(500).json({ error: e });
         }
       }
     }
