@@ -11,7 +11,7 @@ module.exports = {
             if (supported == id) {
               match = id
             } else if (!match && id.indexOf(supported) >= 0) {
-              match = id;
+              match = supported;
             }
           });
         });

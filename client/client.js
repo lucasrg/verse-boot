@@ -44,12 +44,12 @@ document.addEventListener('DOMContentLoaded', function() {
       }, 0);
     }
     if (historyInitialized) {
-      history.replaceState({}, ctx.response.head.title, ctx.request.url);
+      history.replaceState({}, ctx.response.title, ctx.request.url);
     } else {
       historyInitialized = true;
-      history.pushState({}, ctx.response.head.title, ctx.request.url);
+      history.pushState({}, ctx.response.title, ctx.request.url);
     }
-    document.title = ctx.response.head.title;
+    document.title = ctx.response.title;
   }
 
   window.onpopstate = function(event) {

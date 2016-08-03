@@ -67,7 +67,7 @@ module.exports = function (ctx, routes) {
       if (!route) {
         route = routes['404'];
       } else if (isSecuredRoute && !ctx.session.active) {
-        route = publicRoute || routes['401'] || routes['404'];
+        route = (publicRoute || routes['401']) || routes['404'];
       }
 
       if (route) {
@@ -83,10 +83,17 @@ module.exports = function (ctx, routes) {
       }
 
     },
-    end: function (body, head) {
-      ctx.response = {body: body};
-      ctx.response.head = head || { title: ctx.i18n.App.title };
-      ctx.response.status = ctx.response.status || 200;
+    render: function (body, title) {
+      this.end({
+        status: 200,
+        body: body,
+        title: title
+      })
+    },
+    end: function (response) {
+      ctx.response = response;
+      ctx.response.title = response.title || ctx.i18n.App.title;
+      ctx.response.status = response.status || 200;
       ctx.response.history = ctx.request.history;
       ctx.trigger('response');
       if (this.events.end) this.events.end(ctx)

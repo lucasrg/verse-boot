@@ -5,7 +5,7 @@ module.exports = function (ctx) {
       if (ctx.session.user && ctx.request.pathname == ctx.urls.auth()) {
         ctx.router.go(ctx.urls.home());
       } else {
-        ctx.router.end('AuthPage', {title: ctx.i18n.Auth.title});
+        ctx.router.render('AuthPage', ctx.i18n.Auth.title);
       }
     },
     signIn: function (data) {

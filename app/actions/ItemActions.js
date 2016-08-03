@@ -4,7 +4,7 @@ module.exports = function (ctx) {
       ctx.api.get('/api/items/'+id).end(function (err, res) {
         if (err) return ctx.router.redirect(301, ctx.urls.home());
         ctx.stores.Item.item = res.body;
-        ctx.router.end('ItemPage', {title: ctx.i18n.Item.title(ctx.stores.Item.item)})
+        ctx.router.render('ItemPage', ctx.i18n.Item.title(ctx.stores.Item.item))
       });
     },
     edit: function (id) {
@@ -12,11 +12,11 @@ module.exports = function (ctx) {
         ctx.api.get('/api/items/'+id).end(function (err, res) {
           if (err) return ctx.router.redirect(301, ctx.urls.home());
           ctx.stores.Item.item = res.body;
-          ctx.router.end('ItemEditorPage', {title: ctx.i18n.Item.title(ctx.stores.Item.item)})
+          ctx.router.render('ItemEditorPage', ctx.i18n.Item.title(ctx.stores.Item.item))
         });
       } else {
         ctx.stores.Item.item = {};
-        ctx.router.end('ItemEditorPage', {title: ctx.i18n.Item.title(ctx.stores.Item.item)})
+        ctx.router.render('ItemEditorPage', ctx.i18n.Item.title(ctx.stores.Item.item))
       }
 
     },
