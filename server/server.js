@@ -2,7 +2,6 @@
 
 var verse = require('verse/server');
 var express = require('express');
-var httpProxy = require('http-proxy');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var path = require('path');
@@ -36,6 +35,7 @@ if (isProduction) {
   var bundle = require('../config/webpack.bundler.js');
   var less = require('../config/less.js');
   var instant = require('instant');
+  var httpProxy = require('http-proxy');
   var proxy = httpProxy.createProxyServer();
 
   bundle();
