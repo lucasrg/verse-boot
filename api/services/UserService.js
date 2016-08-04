@@ -1,22 +1,21 @@
-var db = require('../db');
+var User = require('../models/User');
 
 var UserService = {
   serialize: function (user) {
     return {
-      id: user.id,
+      id: user._id,
       username: user.username
     }
   },
-  findByUsernameAndPassword: function (username, password) {
-    var result = [];
-    Object.keys(db.users).forEach(function (id) {
-      var user = db.users[id];
-      if (user.username == username && user.password == password) {
-        result.push(UserService.serialize(user));
-      }
-    })
-    return result;
-  },
+  findByUsernameAndPassword: function (username, password, cb) {
+    User.find({
+      username: username,
+      password: password
+    }).exec(function (err, users) {
+      if (err) return cb(err);
+      cb(null, users ? users[0] : null);
+    });
+  }
 }
 
 module.exports = UserService;

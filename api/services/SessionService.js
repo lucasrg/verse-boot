@@ -1,25 +1,31 @@
-var db = require('../db.js');
 var UserService = require('./UserService');
+var Session = require('../models/Session');
 
-module.exports = {
-  signIn: function (username, password, cb) {
-    var users = UserService.findByUsernameAndPassword(username, password);
-    if (users[0]) {
-      var token = db.generateId();
-      db.sessions[token] = {
-        token: token,
-        user: users[0]
-      };
-      cb(null, db.sessions[token]);
-    } else {
-      cb({code:404});
+var SessionService = {
+  serialize: function (session) {
+    return {
+      token: session._id,
+      user: UserService.serialize(session.user)
     }
   },
+  signIn: function (username, password, cb) {
+    UserService.findByUsernameAndPassword(username, password, function (err, user) {
+      if (err) return cb(err);
+      if (!user) return cb({code:404});
+      var session = new Session({ user: user });
+      session.save(cb);
+    })
+  },
   findByToken: function (token, cb) {
-    if (db.sessions[token]) {
-      cb(null, db.sessions[token])
-    } else {
-      cb({code: '404'})
-    }
+    Session.
+      findOne({ _id: token}).
+      populate('user').
+      exec(function (err, session) {
+        if (err) return cb(err);
+        if (!session) return cb({code:404});
+        cb(null, session);
+      });
   }
 }
+
+module.exports = SessionService;

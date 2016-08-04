@@ -1,26 +1,37 @@
-var db = require('../db');
+var Item = require('../models/Item');
 
-module.exports = {
-  create: function (task) {
-    item.id = db.generateId();
-    db.items[item.id] = item;
+var ItemService = {
+  serialize: function (item) {
+    return {
+      id: item._id,
+      name: item.name,
+      done : item.done
+    }
   },
-  update: function (id, item) {
-    var existing = db.items[id];
-    existing.name = item.name;
-    existing.done = item.done;
+  create: function (data, cb) {
+    new Item({
+      name: data.name,
+      done: data.done
+    }).save(cb);
   },
-  delete: function (id) {
-    delete db.items[id];
+  update: function (id, data, cb) {
+    Item.findOneAndUpdate(
+      { _id: id },
+      {
+        name: data.name,
+        done: data.done
+      }
+    ).exec(cb);
   },
-  findOne: function (id) {
-    return db.items[id];
+  delete: function (id, cb) {
+    Item.remove({_id: id}, cb);
   },
-  find: function () {
-    var result = [];
-    Object.keys(db.items).forEach(function (id) {
-      result.push(db.items[id]);
-    })
-    return result;
+  findOne: function (id, cb) {
+    Item.findOne({_id: id}, cb);
+  },
+  find: function (cb) {
+    Item.find().exec(cb);
   },
 }
+
+module.exports = ItemService;
