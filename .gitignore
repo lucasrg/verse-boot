@@ -1,6 +1,5 @@
 # Generated files
-public/static/css/main.*.css
-public/static/js/bundle.*.js
+app/static/gen/*.*
 
 # Logs
 logs

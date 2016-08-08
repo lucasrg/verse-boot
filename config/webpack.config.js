@@ -1,8 +1,8 @@
 var Webpack = require('webpack');
 var path = require('path');
 var nodeModulesPath = path.resolve(__dirname, 'node_modules');
-var buildPath = path.resolve(__dirname, 'public', 'static', 'js');
-var mainPath = path.resolve(__dirname, '..', 'client', 'client.js');
+var buildPath = path.resolve(__dirname, 'app', 'static', 'gen');
+var mainPath = path.resolve(__dirname, '..', 'core', 'Client.js');
 var config = require('./config');
 
 var config = {
@@ -13,7 +13,7 @@ var config = {
     mainPath],
   output: {
     path: buildPath,
-    filename: 'bundle.'+config.version.js+'.js',
+    filename: config.includes.js+'.'+config.version.js+'.js',
     publicPath: '/static/js/'
   },
   module: {

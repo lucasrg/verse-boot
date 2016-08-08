@@ -4,7 +4,7 @@ var fs    = require('fs');
 var writefile = require('writefile')
 var config = require('./config');
 
-var publicPath = __dirname+'/../public/static/css/';
+var publicPath = __dirname+'/../app/static/gen/';
 var outputFile = publicPath + config.includes.css +'.' + config.version.css + '.css';
 
 function compile(lessMainFilename, changedFileName) {
@@ -50,4 +50,7 @@ module.exports = function () {
     if (ext !== 'less') return;
     compile('./app/Styles.less', filename);
   });
+
+  compile('./app/Styles.less');
+
 }

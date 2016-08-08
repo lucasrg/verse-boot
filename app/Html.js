@@ -1,4 +1,4 @@
-var App = require('../app/App');
+var App = require('./App');
 var config = require('../config/config');
 
 module.exports = function(ctx) {
@@ -21,9 +21,8 @@ module.exports = function(ctx) {
         {tag:'meta', name:"mobile-web-app-capable", content:"yes"},
         {tag:'meta', name:"apple-mobile-web-app-capable", content:"yes"},
         {tag:'title', render:response.title},
-        {tag:'link', href: ctx.urls.static('css/main', config.version.css, 'css'), rel:'stylesheet', media:'all'},
-        {tag:'script', src: ctx.urls.static('js/bundle', config.version.js, 'js')},
-        response.head
+        {tag:'link', href: ctx.urls.static('gen/'+config.includes.css, config.version.css, 'css'), rel:'stylesheet', media:'all'},
+        {tag:'script', src: ctx.urls.static('gen/'+config.includes.js, config.version.js, 'js')}
       ]},
       {tag:'body', render: App},
       {tag:'script', render:'window.__app_context__ = '+JSON.stringify(serverContext)+';'}

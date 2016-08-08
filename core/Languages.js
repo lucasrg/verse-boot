@@ -22,7 +22,7 @@ module.exports = {
 
     var bundle = this.cache[locale];
     if (!bundle) {
-      bundle = require('../app/i18n/'+locale);
+      bundle = require('../app/static/i18n/'+locale);
     }
     return bundle;
   }

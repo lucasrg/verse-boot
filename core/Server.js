@@ -6,9 +6,9 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var path = require('path');
 
-var Html = require('./Html');
+var Html = require('../app/Html');
 
-var Context = require('../context/Context');
+var Context = require('./Context');
 
 var app = express();
 var server = require('http').Server(app);
@@ -18,7 +18,7 @@ var isProduction = process.env.NODE_ENV === 'production';
 var port = process.env.PORT || 3000;
 var apiPort = process.env.API_PORT || 3010;
 var apiHost = process.env.API_HOST || 'http://localhost';
-var publicPath = path.resolve(__dirname, '..', 'public');
+var publicPath = path.resolve(__dirname, '..', 'app', 'static');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -27,7 +27,7 @@ app.use(cookieParser());
 if (isProduction) {
   var compression = require('compression')
   app.use(compression());
-  app.use('/static',express.static(publicPath+'/static',{
+  app.use('/static',express.static(publicPath,{
     fallthrough: false,
     index: false
   }));
@@ -48,8 +48,8 @@ if (isProduction) {
   app.all('/static/js/*', function (req, res) {
     proxy.web(req, res, { target: 'http://localhost:3001'});
   });
-  app.use(instant(publicPath));
-  app.use('/favicon.ico',express.static(publicPath+'/static/favicon.ico'));
+  app.use('/favicon.ico',express.static(publicPath+'/favicon.ico'));
+  app.use(instant(path.resolve(__dirname, '..', 'app')));
 }
 
 
