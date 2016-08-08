@@ -45,7 +45,7 @@ if (isProduction) {
     console.log('Could not connect to proxy, please try again...');
   });
 
-  app.all('/static/js/*', function (req, res) {
+  app.all('/static/gen/*.js', function (req, res) {
     proxy.web(req, res, { target: 'http://localhost:3001'});
   });
   app.use('/favicon.ico',express.static(publicPath+'/favicon.ico'));
