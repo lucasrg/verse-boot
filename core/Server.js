@@ -54,7 +54,6 @@ if (isProduction) {
   app.use(instant(path.resolve(__dirname, '..', 'app')));
 }
 
-
 //-------------------API SERVER--------------------------------
 var apiServer = require('../api/server');
 var apiProxy = require('express-http-proxy');
@@ -91,22 +90,13 @@ app.use(function (req, res, next) {
 
 app.use(function (req, res, next) {
 
-  var locale = req.get('accept-language');
-  var language = Languages.get(req.session.locale || locale);
-
-  var i18n = Languages.cache[language];
-  if (!i18n) {
-    var i18nFilename = publicPath+'/i18n/'+language+'.js';
-    var i18nData = fs.readFileSync(i18nFilename, 'utf8');
-    var i18nSrc = 'module.exports ' + i18nData.substr(i18nData.indexOf('='));
-
-    var Module = module.constructor;
-    var m = new Module();
-    m._compile(i18nSrc, i18nFilename);
-    i18n = m.exports;
-    Languages.cache[language] = i18n;
-
+  if (req.session && req.session.language) {
+    var language = req.session.language;
+  } else {
+    var language = Languages.get(req.get('accept-language'));
   }
+
+  var i18n = loadLanguage(language);
 
   var context = Context({
     userAgent: req.get('user-agent'),
@@ -145,3 +135,19 @@ server.listen(port, function () {
   console.info('Server running on port ' + port);
   console.info('Public path ' + publicPath);
 });
+
+function loadLanguage(language) {
+  var i18n = Languages.cache[language];
+  if (!i18n) {
+    var i18nFilename = publicPath+'/i18n/'+language+'.js';
+    var i18nData = fs.readFileSync(i18nFilename, 'utf8');
+    var i18nSrc = 'module.exports ' + i18nData.substr(i18nData.indexOf('='));
+
+    var Module = module.constructor;
+    var m = new Module();
+    m._compile(i18nSrc, i18nFilename);
+    i18n = m.exports;
+    Languages.cache[language] = i18n;
+  }
+  return i18n;
+}

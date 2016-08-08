@@ -22,13 +22,13 @@ module.exports = function(ctx) {
   return {
     tag: 'html', render: [
       {tag:'head', render: [
+        {tag:'link', href: ctx.urls.static(css), rel:'stylesheet', media:'all'},
+        {tag:'script', src: ctx.urls.static(i18n)},
+        {tag:'script', defer: isProduction ? '' : null, src: ctx.urls.static(js)},
         {tag:'meta', name:"viewport", content:"width=device-width, initial-scale=1"},
         {tag:'meta', name:"mobile-web-app-capable", content:"yes"},
         {tag:'meta', name:"apple-mobile-web-app-capable", content:"yes"},
-        {tag:'title', render:response.title},
-        {tag:'script', src: ctx.urls.static(i18n)},
-        {tag:'script', defer: isProduction ? '' : null, src: ctx.urls.static(js)},
-        {tag:'link', href: ctx.urls.static(css), rel:'stylesheet', media:'all'}
+        {tag:'title', render:response.title}
       ]},
       {tag:'body', render: App},
       {tag:'script', render:'window.__app_context__ = '+JSON.stringify(serverContext)+';'}

@@ -1,3 +1,3 @@
-cd web
-NODE_ENV=production node deploy
-sudo NODE_ENV=production PORT=80 API_HOST=localhost:80 npm start
+NODE_ENV=production node config/deploy
+NODE_ENV=production PORT=3000 API_PORT=3010 API_HOST=http://localhost npm start
+#sudo NODE_ENV=production PORT=80 API_PORT=3010 API_HOST=http://localhost npm start

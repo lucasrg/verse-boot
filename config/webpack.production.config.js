@@ -6,11 +6,11 @@ var config = require('./config');
 
 module.exports = {
   entry: [
-    path.join(__dirname, 'app/main.js')
+    path.join(__dirname, '../core/Client.js')
   ],
   output: {
-    path: path.join(__dirname, '/public/static/js/'),
-    filename: 'bundle.'+config.version.js+'.js'
+    path: path.join(__dirname, '../app/static/gen/'),
+    filename: config.includes.js+'.'+config.version.js+'.js'
   },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
@@ -23,7 +23,6 @@ module.exports = {
         screw_ie8: true
       }
     }),
-    //new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /pt_BR|en|jp/),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     })
@@ -33,8 +32,5 @@ module.exports = {
       test: /\.less$/,
       loader: "style!css!less"
     }]
-  },
-  // postcss: [
-  //   require('autoprefixer')
-  // ]
+  }
 };
