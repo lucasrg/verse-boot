@@ -1,4 +1,4 @@
-module.exports = {
+window.i18n = {
   App: {
     title: 'Verse Boot',
     loading: 'Loading...',

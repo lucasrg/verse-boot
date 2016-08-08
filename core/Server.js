@@ -5,10 +5,12 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var path = require('path');
+var fs = require('fs');
 
 var Html = require('../app/Html');
 
 var Context = require('./Context');
+var Languages = require('./Languages');
 
 var app = express();
 var server = require('http').Server(app);
@@ -88,11 +90,29 @@ app.use(function (req, res, next) {
 })
 
 app.use(function (req, res, next) {
+
+  var locale = req.get('accept-language');
+  var language = Languages.get(req.session.locale || locale);
+
+  var i18n = Languages.cache[language];
+  if (!i18n) {
+    var i18nFilename = publicPath+'/i18n/'+language+'.js';
+    var i18nData = fs.readFileSync(i18nFilename, 'utf8');
+    var i18nSrc = 'module.exports ' + i18nData.substr(i18nData.indexOf('='));
+
+    var Module = module.constructor;
+    var m = new Module();
+    m._compile(i18nSrc, i18nFilename);
+    i18n = m.exports;
+    Languages.cache[language] = i18n;
+
+  }
+
   var context = Context({
     userAgent: req.get('user-agent'),
     session: req.session,
-    locale: req.get('accept-language')
-  });
+    language: language
+  }, i18n);
 
   context.api.host = apiHost+':'+apiPort;
 

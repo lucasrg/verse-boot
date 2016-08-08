@@ -5,15 +5,15 @@ var App = require('../app/App');
 
 var historyInitialized = false;
 
-document.addEventListener('DOMContentLoaded', function() {
-
+setTimeout(function() {
   var serverSideContext = window.__app_context__ || {};
 
   var context = Context({
     userAgent: navigator.userAgent,
     session: serverSideContext.session,
-    locale: serverSideContext.locale
-  });
+    locale: serverSideContext.locale,
+    language: serverSideContext.language
+  }, window.i18n);
 
   if (serverSideContext.stores) {
     var reconcile = true;
@@ -71,4 +71,4 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   if (!reconcile) context.router.go(location.pathname+location.search);
 
-}, false);
+}, 0);

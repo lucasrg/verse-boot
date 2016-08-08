@@ -1,6 +1,6 @@
 module.exports = {
-  static: function (path, version, ext) {
-    return version ? '/static/'+path+'.'+version+'.'+ext : '/static/'+path;
+  static: function (path) {
+    return '/static/'+path;
   },
   auth: function () {
     return '/sign-in'
