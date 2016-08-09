@@ -1,6 +1,6 @@
 {
   "name": "verse-boot",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Verse boilerplate project",
   "scripts": {
     "start": "bin/dev.sh"
