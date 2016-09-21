@@ -1,6 +1,6 @@
 'use strict';
 
-var verse = require('verse/server');
+var verse = require('verse');
 var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');

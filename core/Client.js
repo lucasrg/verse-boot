@@ -1,4 +1,4 @@
-var verse = require('verse/client')
+var verse = require('verse')
 var Cookies = require('js-cookie');
 var Context = require('./Context');
 var App = require('../app/App');
@@ -64,11 +64,10 @@ setTimeout(function() {
   }
 
   verse.render({
-    root: document.body,
     template: App,
     context:context,
     reconcile: reconcile
-  });
+  }, document.body);
   if (!reconcile) context.router.go(location.pathname+location.search);
 
 }, 0);

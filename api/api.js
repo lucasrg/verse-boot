@@ -11,6 +11,8 @@ router.route('/sign-in/').post(function(req, res) {
 
 router.route('/session/:token').get(function(req, res) {
   SessionService.findByToken(req.params.token, function (err, session) {
+    if (err) return res.status(400).json(err);
+    if (!err) return res.status(400).json({code:'not_found'});
     res.json(SessionService.serialize(session));
   });
 });
